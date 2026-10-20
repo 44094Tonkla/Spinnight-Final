@@ -155,12 +155,11 @@ const SpinWheelGame = ({ gameState, currentUser, updateGameState, isHost, onBack
   const timerSeconds = Math.max(0, 60 - challengeElapsed);
 
   // Authorization checks
-  const isSelectedPlayer = selectedPlayer?.id === currentUserId;
-  const canRevealChallenge = isHost || isSelectedPlayer;
-  const canCompleteChallenge = isHost || isSelectedPlayer;
+  const canRevealChallenge = true;
+  const canCompleteChallenge = true;
 
   const handleSpinClick = async () => {
-    if (players.length < 2 || isSpinningLocal || !isHost) return;
+    if (players.length < 2 || isSpinningLocal) return;
 
     setIsSpinningLocal(true);
 
@@ -222,7 +221,6 @@ const SpinWheelGame = ({ gameState, currentUser, updateGameState, isHost, onBack
   };
 
   const handleNextRound = async () => {
-    if (!isHost) return;
     await updateGameState({
       currentRound: currentRound + 1,
       gameStatus: 'LOBBY',
@@ -235,7 +233,6 @@ const SpinWheelGame = ({ gameState, currentUser, updateGameState, isHost, onBack
   };
 
   const handlePlayAgain = async () => {
-    if (!isHost) return;
     await updateGameState({
       currentRound: 1,
       gameStatus: 'LOBBY',
@@ -420,8 +417,7 @@ const SpinWheelGame = ({ gameState, currentUser, updateGameState, isHost, onBack
             {spinPhase === 'LOBBY' && (
               <>
                 <div className="round-ready-note">ROUND {String(currentRound).padStart(2, '0')} · READY TO SPIN</div>
-                {isHost ? (
-                  <button 
+                <button 
                     onClick={handleSpinClick} 
                     disabled={isSpinningLocal || players.length < 2}
                     className="primary-button" 
@@ -429,13 +425,6 @@ const SpinWheelGame = ({ gameState, currentUser, updateGameState, isHost, onBack
                   >
                     {isSpinningLocal ? 'SPINNING...' : 'SPIN THE WHEEL'}
                   </button>
-                ) : (
-                  <div className="glass-card" style={{ padding: '0.85rem 2rem', border: '1px solid var(--gold-primary)' }}>
-                    <p style={{ color: 'var(--gold-bright)', margin: 0, fontWeight: '600' }}>
-                      Waiting for host to spin...
-                    </p>
-                  </div>
-                )}
               </>
             )}
 
@@ -556,15 +545,9 @@ const SpinWheelGame = ({ gameState, currentUser, updateGameState, isHost, onBack
                   สะสมคะแนนเพิ่มเรียบร้อย! เตรียมตัวสำหรับรอบถัดไป
                 </p>
 
-                {isHost ? (
-                  <button onClick={handleNextRound} className="primary-button" style={{ width: '100%', fontSize: '1rem', padding: '0.85rem' }}>
+                <button onClick={handleNextRound} className="primary-button" style={{ width: '100%', fontSize: '1rem', padding: '0.85rem' }}>
                     SPIN NEXT ROUND (ROUND 0{currentRound + 1}) →
                   </button>
-                ) : (
-                  <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem' }}>
-                    รอหัวหน้าห้องเริ่มหมุนรอบถัดไป...
-                  </p>
-                )}
               </div>
             )}
 

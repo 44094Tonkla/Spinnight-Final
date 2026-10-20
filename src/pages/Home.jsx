@@ -86,19 +86,16 @@ const Home = () => {
           สร้างเกม เพิ่มผู้เล่น แล้วเล่นได้เลยในเครื่องเดียว
         </p>
 
-        {/* 5 & 6. Primary & Secondary Action Buttons (NO EMOJIS) */}
+        {/* 5. Primary Action Button */}
         <div style={{ 
           display: 'flex', 
-          justify: 'center', 
-          gap: '1.25rem', 
+          justifyContent: 'center', 
           marginBottom: '1rem',
-          flexWrap: 'wrap'
+          width: '100%',
+          maxWidth: '380px'
         }}>
-          <Link to="/create-room" className="primary-button home-action-button" style={{ fontSize: '1.05rem', padding: '1rem 2.5rem' }}>
+          <Link to="/create-room" className="primary-button home-action-button" style={{ fontSize: '1.15rem', padding: '1.1rem 3rem', width: '100%', textAlign: 'center' }}>
             CREATE ROOM
-          </Link>
-          <Link to="/create-room" className="secondary-button home-action-button" style={{ fontSize: '1.05rem', padding: '1rem 2.5rem' }}>
-            ADD PLAYERS
           </Link>
         </div>
 
